@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Stopping Running Container: "
-docker stop $(docker ps | grep eureka-client | awk '{print $1}')
+docker stop $(docker ps -a | grep eureka-client | awk '{print $1}')
 echo "Deleting Existing Container: "
 docker rm $(docker ps -a | grep eureka-client | awk '{print $1}')
 
