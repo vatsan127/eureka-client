@@ -1,0 +1,38 @@
+# Deployment for Eureka Server
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eureka-client
+  labels:
+    app: eureka-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eureka-client
+  template:
+    metadata:
+      labels:
+        app: eureka-client
+    spec:
+      containers:
+        - name: eureka-client
+          imagePullPolicy: Never
+          image: eureka-client:latest
+          ports:
+            - name: http
+              containerPort: 8080
+---
+# Service for Eureka Client
+apiVersion: v1
+kind: Service
+metadata:
+  name: eureka-client
+spec:
+  selector:
+    app: eureka-client
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP

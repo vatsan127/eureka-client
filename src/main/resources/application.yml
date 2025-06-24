@@ -1,30 +1,32 @@
-server.port: 0
+server.port: 8080
 
 spring.application.name: eureka-client
 
 eureka:
   client:
-    enabled: true
     refresh.enable: false
     healthcheck.enabled: true
     register-with-eureka: true
     fetch-registry: true
-    registry-fetch-interval-seconds: 30  # Reduced from 1 to 30 seconds
+    registry-fetch-interval-seconds: 30
     serviceUrl:
-      defaultZone: http://eureka-peer1:8761/eureka/,http://eureka-peer2:8762/eureka/,http://eureka-peer3:8763/eureka/
+      defaultZone: http://eureka-server:8761/eureka/
+#      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/,http://localhost:8763/eureka/
 
   instance:
-    instance-id: ${spring.application.name}:${random.uuid}
-    prefer-ip-address: true  # Uncommented - helps with hostname resolution issues
-    lease-renewal-interval-in-seconds: 30  # Changed from 1 to 30 seconds
-    lease-expiration-duration-in-seconds: 90  # Changed from 2 to 90 seconds
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 3
 
 management:
   endpoints:
-    web.exposure.include: health,info
-  endpoint.health.show-details: always
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health.show-details: always
+    info.access: read_only
 
-# Additional recommended settings
 logging:
   level:
     com.netflix.eureka: DEBUG
