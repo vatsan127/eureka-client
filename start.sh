@@ -42,5 +42,6 @@ docker tag eureka-client:latest eureka-client:$TIMESTAMP 2>/dev/null || true
 docker build -t eureka-client:latest .
 
 # Apply k8s config and force restart
+kubectl delete -f ./k8s.yml
 kubectl apply -f ./k8s.yml
 kubectl rollout restart deployment eureka-client
